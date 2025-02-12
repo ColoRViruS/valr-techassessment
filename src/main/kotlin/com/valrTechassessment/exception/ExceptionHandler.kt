@@ -44,7 +44,7 @@ class ExceptionHandler {
             "The currency pair is invalid",
             throwable
         )
-        return ClientFriendlyException().reason("Request is missing data")
+        return ClientFriendlyException().reason("Request has invalid currency pair")
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -7,17 +7,18 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
-class CurrancyComponent(
+class CurrencyComponent(
     private val currencyClient: CurrencyClient
 ) {
-    val logger: Logger = LoggerFactory.getLogger("CurrancyComponent")
+    private val logger = LoggerFactory.getLogger("CurrancyComponent")
 
     var currencyPairCache = emptyList<CurrencyPairs>()
 
     fun validateCurrencyPair(currencyPairString: String): Boolean {
         if (currencyPairCache.isEmpty()) {
-            logger.debug("currencyPairCache empty. retrieving new list")
+            logger.info("currencyPairCache empty. retrieving new list")
             currencyPairCache = currencyClient.getCurrencyPairsList()
+            logger.info("currencyPairCache count. ${currencyPairCache.size}")
         }
 
         return currencyPairCache.any { currencyPair -> currencyPair.symbol == currencyPairString }

@@ -16,9 +16,9 @@ data class CurrencyPairResponse(
     val baseDecimalPlaces: String,
     val marginTradingAllowed: Boolean,
     val currencyPairType: String,
-    val initialMarginFraction: String,
-    val maintenanceMarginFraction: String,
-    val autoCloseMarginFraction: String
+    val initialMarginFraction: String?,
+    val maintenanceMarginFraction: String?,
+    val autoCloseMarginFraction: String?
 ) {
     fun toDomain(): CurrencyPairs {
         return CurrencyPairs(

@@ -6,17 +6,26 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.valrTechassessment.clients.currency.clientModels.CurrencyPairResponse
 import com.valrTechassessment.models.CurrencyPairs
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 @Repository
 class CurrencyClient {
+
+    val logger= LoggerFactory.getLogger("CurrancyComponent")
+
     fun getCurrencyPairsList(): List<CurrencyPairs> {
         //Simulate Calling /v1/public/pairs
-
-        val resource = ClassPathResource("currency.json")
-        val inputStream = resource.inputStream
+        val fileContent = try {
+            val inputStream = ClassPathResource("CurrencyPairsSample.json").inputStream
+            inputStream.bufferedReader().use { it.readText() }
+        } catch (e: Exception) {
+            logger.debug(e.message)
+            throw e
+        }
 
         val objectMapper = jacksonObjectMapper()
-        val list: List<CurrencyPairResponse> = objectMapper.readValue(inputStream)
+        val list: List<CurrencyPairResponse> = objectMapper.readValue(fileContent)
         return list.map { it.toDomain() }
     }
 }
