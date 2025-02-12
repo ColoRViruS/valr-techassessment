@@ -1,4 +1,4 @@
-package com.valr.valrTechassessment
+package com.valrTechassessment
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

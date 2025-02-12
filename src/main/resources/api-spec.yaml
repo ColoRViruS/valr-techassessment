@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: VALR Technical Assessment
+  description: VALR Technical Assessment
+  version: 1.0.0
+servers:
+  - url: https://localhost
+    description: VALRTechnicalAssessment
+paths:
+  /echoTest:
+    get:
+      tags:
+        - echoTest
+      summary: echoTest
+      description: echoTest
+      operationId: echoTest
+      responses:
+        '200':
+          description: Ok
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+components:
+  schemas:
+    clientFriendlyException:
+      type: object
+      properties:
+        reason:
+          type: string
