@@ -12,7 +12,7 @@ class CurrencyComponent(
 ) {
     private val logger = LoggerFactory.getLogger("CurrancyComponent")
 
-    var currencyPairCache = emptyList<CurrencyPairs>()
+  private  var currencyPairCache = emptyList<CurrencyPairs>()
 
     fun validateCurrencyPair(currencyPairString: String): Boolean {
         if (currencyPairCache.isEmpty()) {
