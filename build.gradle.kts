@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
+    kotlin("plugin.serialization") version "1.8.0"
     id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.openapi.generator").version("7.10.0")
@@ -32,6 +33,9 @@ dependencies {
     implementation("io.swagger.core.v3:swagger-annotations:2.2.28")
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("org.openapitools:jackson-databind-nullable:+")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.8.0")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")

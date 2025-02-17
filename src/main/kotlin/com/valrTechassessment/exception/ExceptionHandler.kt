@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 @ControllerAdvice(basePackageClasses = [ValrTechassessmentApplication::class])
 class ExceptionHandler {
 
-    private val logger = LoggerFactory.getLogger("ExceptionHandler")
+    private val logger = LoggerFactory.getLogger(this::class.simpleName)
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Throwable::class)

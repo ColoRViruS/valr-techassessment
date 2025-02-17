@@ -71,6 +71,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Orders'
+        BidsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Orders'
         LastChange:
           type: string
           format: date-time

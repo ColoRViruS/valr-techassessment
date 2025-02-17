@@ -8,19 +8,23 @@ import org.springframework.stereotype.Component
 class CurrencyComponent(
     private val currencyClient: CurrencyClientInterface
 ) {
-    private val logger = LoggerFactory.getLogger("CurrancyComponent")
+    private val logger = LoggerFactory.getLogger(this::class.simpleName)
 
     private var currencyPairCache = emptyList<CurrencyPairs>()
+    private var currencyPairSymbolsFlatMap = emptyList<String>()
 
-    fun validateCurrencyPair(currencyPairString: String): Boolean {
-        if (currencyPairCache.isEmpty()) {
-            logger.info("currencyPairCache empty. retrieving new list")
-            currencyPairCache = currencyClient.getCurrencyPairsList()
-            logger.info("currencyPairCache count. ${currencyPairCache.size}")
-        }
+    fun validateCurrencyPair(currencyPairString: String): Boolean  {
 
-        return currencyPairCache.any { currencyPair -> currencyPair.symbol == currencyPairString }
+        if (currencyPairCache.isEmpty()) getPopulateCurrencyCache()
+
+        return currencyPairSymbolsFlatMap.any { currencyPairSymbol -> currencyPairSymbol == currencyPairString }
 
     }
 
+    private fun getPopulateCurrencyCache() {
+        logger.info("currencyPairCache empty. retrieving new list")
+        currencyPairCache = currencyClient.getCurrencyPairsList()
+        currencyPairSymbolsFlatMap = currencyPairCache.map { it.symbol }
+        logger.info("currencyPairCache count. ${currencyPairCache.size}")
+    }
 }

@@ -1,13 +1,13 @@
-package com.valrTechassessment.component
+package com.valrTechassessment.component.currency
 
 import com.valrTechassessment.clients.currency.CurrencyClient
-import com.valrTechassessment.component.currency.CurrencyComponent
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
+import kotlin.test.assertFalse
 
 class CurrencyComponentTest {
 
-    private lateinit var currencyClient: CurrencyClient
+    private lateinit var currencyClient: CurrencyClientInterface
     private lateinit var currencyComponent: CurrencyComponent
 
     @BeforeEach
@@ -24,7 +24,16 @@ class CurrencyComponentTest {
         val resultBoolean = currencyComponent.validateCurrencyPair(currencyPair)
         //then
         assert(resultBoolean)
+    }
 
+    @Test
+    fun `validate a Currency Pair negative `() {
+        //given
+        val currencyPair = "ZARBTC"
+        //when
+        val resultBoolean = currencyComponent.validateCurrencyPair(currencyPair)
+        //then
+        assertFalse(resultBoolean)
     }
 
 

@@ -2,7 +2,7 @@ package com.valrTechassessment.clients.currency.clientModels
 
 import com.valrTechassessment.models.currency.CurrencyPairs
 
-data class CurrencyPairResponse(
+data class CurrencyPairClientDto(
     val symbol: String,
     val baseCurrency: String,
     val quoteCurrency: String,

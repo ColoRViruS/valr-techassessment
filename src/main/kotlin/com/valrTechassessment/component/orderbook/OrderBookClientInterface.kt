@@ -1,18 +1,9 @@
 package com.valrTechassessment.component.orderbook
 
-import com.valrTechassessment.clients.orderbook.clientModels.AskOrdersResponse
-import com.valrTechassessment.models.orderBook.OrderBook
+import com.valrTechassessment.models.orderBook.OrderBookDomainDto
 
 interface OrderBookClientInterface {
 
-    fun getOrderbook(currencyPair: String): OrderBook
+    fun getOrderbook(currencyPair: String): OrderBookDomainDto
 
-    fun addOrder(
-        currencyPair: String,
-        askOrders: AskOrdersResponse
-    )
-
-    fun deleteOrder() {
-
-    }
 }
