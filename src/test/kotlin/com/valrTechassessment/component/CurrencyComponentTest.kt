@@ -1,6 +1,7 @@
 package com.valrTechassessment.component
 
 import com.valrTechassessment.clients.currency.CurrencyClient
+import com.valrTechassessment.component.currency.CurrencyComponent
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 

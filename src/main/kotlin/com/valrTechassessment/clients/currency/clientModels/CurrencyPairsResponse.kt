@@ -1,6 +1,6 @@
 package com.valrTechassessment.clients.currency.clientModels
 
-import com.valrTechassessment.models.CurrencyPairs
+import com.valrTechassessment.models.currency.CurrencyPairs
 
 data class CurrencyPairResponse(
     val symbol: String,

@@ -1,6 +1,6 @@
-package com.valrTechassessment.models
+package com.valrTechassessment.models.orderBook
 
-data class AskOrders(
+data class AskOrdersbook(
     val side: Side,
     val quantity: String,
     val price: String,

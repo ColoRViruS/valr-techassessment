@@ -12,7 +12,7 @@ class OrderbookController(
 ) : OrderbookApiClient {
 
     override fun getOrderbook(currencyPair: String): ResponseEntity<GetOrderBookResponse> {
-        val orderbook = orderbookService.getOrderbook()
+        val orderbook = orderbookService.getOrderbook(currencyPair = currencyPair)
         return ResponseEntity.ok(orderbook)
 
     }
