@@ -1,11 +1,12 @@
 package com.valrTechassessment.clients.orderbook.clientModels
 
+import com.valrTechassessment.models.BuySellSideEnum
 import com.valrTechassessment.models.orderBook.OrderDomainDto
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class OrdersClientDto(
-    val side: OrderDomainDto.OrderSide,
+    val side: BuySellSideEnum,
     val quantity: String,
     val price: String,
     val currencyPair: String,

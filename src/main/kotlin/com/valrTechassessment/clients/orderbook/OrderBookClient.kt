@@ -1,9 +1,7 @@
 package com.valrTechassessment.clients.orderbook
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.valrTechassessment.clients.orderbook.clientModels.OrderBookClientDto
 import com.valrTechassessment.clients.orderbook.clientModels.MockOrderBook
+import com.valrTechassessment.clients.orderbook.clientModels.OrderBookClientDto
 import com.valrTechassessment.clients.orderbook.clientModels.Sequencer
 import com.valrTechassessment.component.orderbook.OrderBookClientInterface
 import com.valrTechassessment.models.orderBook.OrderBookDomainDto

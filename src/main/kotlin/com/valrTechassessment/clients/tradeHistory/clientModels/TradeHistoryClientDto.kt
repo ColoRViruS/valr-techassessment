@@ -1,6 +1,7 @@
 package com.valrTechassessment.clients.tradeHistory.clientModels
 
 import com.valrTechassessment.clients.tradeHistory.serializer.OffsetDateTimeSerializer
+import com.valrTechassessment.models.BuySellSideEnum
 import com.valrTechassessment.models.tradeHistory.TradeHistoryDomainDto
 import kotlinx.serialization.Serializable
 import java.time.OffsetDateTime
@@ -12,19 +13,19 @@ data class TradeHistoryClientDto(
     val currencyPair: String,
     @Serializable(with = OffsetDateTimeSerializer::class)
     val tradedAt: OffsetDateTime,
-    val takerSide: String,
+    val takerSide: BuySellSideEnum,
     val sequenceId: Long,
     val id: String,
     val quoteVolume: String
 ) {
     fun toDomain() = TradeHistoryDomainDto(
-        price = price,
-        quantity = quantity,
-        currencyPair = currencyPair,
-        tradedAt = tradedAt,
-        takerSide = takerSide,
-        sequenceId = sequenceId,
-        id = id,
-        quoteVolume = quoteVolume
+        tradePrice = price,
+        tradeQuantity = quantity,
+        tradeCurrencyPair = currencyPair,
+        tradedAtDate = tradedAt,
+        tradeTakerSide = takerSide,
+        tradeSequenceId = sequenceId,
+        tradeId = id,
+        tradeQuoteVolume = quoteVolume
     )
 }

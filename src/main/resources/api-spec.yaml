@@ -62,6 +62,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/clientFriendlyException'
 
+  /tradehistory/{currencyPair}:
+    get:
+      tags:
+        - tradeHistory
+      summary: get Trade History for currency pair with optional limit and skip
+      description: get Trade History for currency pair with optional limit and skip
+      operationId: getTradeHistory
+      parameters:
+        - in: path
+          name: currencyPair
+          schema:
+            type: string
+          required: true
+          description: Currency Pair
+        - name: limit
+          in: query
+          description: "limit the records returned"
+          required: false
+          schema:
+            type: integer
+        - name: skip
+          in: query
+          description: "Skips first x amount of records"
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getTradeHistoryResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/clientFriendlyException'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/clientFriendlyException'
+
 components:
   schemas:
     getOrderBookResponse:
@@ -83,13 +129,17 @@ components:
           type: integer
           format: int64
           example: 6916055818
+
+    getTradeHistoryResponse:
+        type: array
+        items:
+          $ref: '#/components/schemas/TradeHistoryDetails'
+
     Orders:
       type: object
       properties:
         side:
-          type: string
-          enum: [ "sell", "buy" ]
-          example: "sell"
+          $ref: "#/components/schemas/SellBuySide"
         quantity:
           type: string
           description: "Quantity of the asset being traded"
@@ -106,6 +156,49 @@ components:
           description: "Number of orders at this price level"
           example: 1
 
+    TradeHistoryDetails:
+      type: object
+      properties:
+        price:
+          type: string
+          description: "The price of the trade"
+          example: "1792421"
+        quantity:
+          type: string
+          description: "The quantity of the asset traded"
+          example: "0.00326263"
+        currencyPair:
+          type: string
+          description: "The trading pair, e.g., BTCZAR"
+          example: "BTCZAR"
+        tradedAt:
+          type: string
+          format: date-time
+          description: "Timestamp when the trade was executed"
+          example: "2025-02-17T18:11:23.048Z"
+        takerSide:
+          $ref: "#/components/schemas/SellBuySide"
+        sequenceId:
+          type: integer
+          format: int64
+          description: "Unique sequence identifier for the trade"
+          example: 1341109758534356995
+        id:
+          type: string
+          description: "Unique identifier for the trade"
+          example: "98579203-ed5a-11ef-94b8-8bb637837ae4"
+        quoteVolume:
+          type: string
+          description: "The quoted volume for the trade"
+          example: "5848.00652723"
+
+    SellBuySide:
+      type: string
+      description: "buyer or seller side"
+      enum:
+        - "buy"
+        - "sell"
+      example: "sell"
 
     clientFriendlyException:
       type: object
