@@ -44,28 +44,28 @@ class OrderBookClient : OrderBookClientInterface {
         )
 
     private fun seedMockOrderbookMap() {
-        val fileContent = try {
+        try {
             val inputStream = ClassPathResource("OrderbookSample.json").inputStream
-            inputStream.bufferedReader().use { it.readText() }
+            val fileContent = inputStream.bufferedReader().use { it.readText() }
+
+            val mockOrderBook = Json.decodeFromString<MockOrderBook>(fileContent)
+
+            mockOrderBook.asks.forEach { orders ->
+                val clientOrderBook = currencyToOrderBookMap.getOrPut(key = orders.currencyPair) {
+                    emptyOrderbook()
+                }
+                clientOrderBook.asks.add(orders)
+            }
+
+            mockOrderBook.bids.forEach { orders ->
+                val clientOrderBook = currencyToOrderBookMap.getOrPut(key = orders.currencyPair) {
+                    emptyOrderbook()
+                }
+                clientOrderBook.bids.add(orders)
+            }
         } catch (e: Exception) {
-            logger.debug(e.message)
+            logger.warn(e.message)
             throw e
-        }
-
-        val mockOrderBook = Json.decodeFromString<MockOrderBook>(fileContent)
-
-        mockOrderBook.asks.forEach { orders ->
-            val clientOrderBook = currencyToOrderBookMap.getOrPut(key = orders.currencyPair) {
-                emptyOrderbook()
-            }
-            clientOrderBook.asks.add(orders)
-        }
-
-        mockOrderBook.bids.forEach { orders ->
-            val clientOrderBook = currencyToOrderBookMap.getOrPut(key = orders.currencyPair) {
-                emptyOrderbook()
-            }
-            clientOrderBook.asks.add(orders)
         }
     }
 }

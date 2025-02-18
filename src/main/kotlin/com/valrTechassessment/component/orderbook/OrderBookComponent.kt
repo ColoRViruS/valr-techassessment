@@ -15,6 +15,12 @@ class OrderBookComponent(
     ): OrderBookDomainDto {
 
         logger.info("Getting Orderbook for currency pair: $currencyPair")
-        return orderBookClientInterface.getOrderbook(currencyPair)
+
+        val orderBook = orderBookClientInterface.getOrderbook(currencyPair)
+
+        return orderBook.copy(
+            asks = orderBook.asks.sortedBy { it.orderPrice },
+            bids = orderBook.bids.sortedByDescending { it.orderPrice }
+        )
     }
 }

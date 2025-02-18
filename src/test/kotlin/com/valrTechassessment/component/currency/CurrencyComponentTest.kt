@@ -17,7 +17,7 @@ class CurrencyComponentTest {
     }
 
     @Test
-    fun `validate a Currency Pair successful `() {
+    fun `validate a Currency Pair successful`() {
         //given
         val currencyPair = "BTCZAR"
         //when
