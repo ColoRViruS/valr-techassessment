@@ -2,7 +2,6 @@ package com.valrTechassessment.service.models.orderBook
 
 import com.valrTechassessment.Orders
 import com.valrTechassessment.service.models.BuySellSideEnum
-import java.util.UUID
 
 data class OrderDomainDto(
     val orderId: Int?,

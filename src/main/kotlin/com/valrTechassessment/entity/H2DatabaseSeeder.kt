@@ -2,9 +2,9 @@ package com.valrTechassessment.entity
 
 import com.valrTechassessment.entity.currency.CurrencyPairEntity
 import com.valrTechassessment.entity.currency.CurrencyRepository
+import com.valrTechassessment.entity.orderbook.OrderBookEntity
 import com.valrTechassessment.entity.orderbook.OrderBookRepository
 import com.valrTechassessment.entity.orderbook.clientModels.MockOrderBook
-import com.valrTechassessment.entity.orderbook.OrderBookEntity
 import com.valrTechassessment.entity.tradeHistory.TradeHistoryEntity
 import com.valrTechassessment.entity.tradeHistory.TradeHistoryRepository
 import kotlinx.serialization.json.Json
@@ -16,17 +16,18 @@ import java.time.OffsetDateTime
 
 @Component
 class H2DatabaseSeeder(
-    private val currencyRepository: CurrencyRepository,
-    private val orderBookRepository: OrderBookRepository,
-    private val tradeHistoryRepository: TradeHistoryRepository,
+    private val currencyRepository: CurrencyRepository? = null,
+    private val orderBookRepository: OrderBookRepository? = null,
+    private val tradeHistoryRepository: TradeHistoryRepository? = null,
 ) {
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.simpleName)
 
     init {
-        seedMockCurrencyPairsCache()
-        seedMockOrderbookMap()
-        seedMockTradeHistoryMap()
+
+        if (currencyRepository != null) seedMockCurrencyPairsCache()
+        if (orderBookRepository != null) seedMockOrderbookMap()
+        if (tradeHistoryRepository != null) seedMockTradeHistoryMap()
     }
 
     private fun seedMockCurrencyPairsCache() {
@@ -36,7 +37,7 @@ class H2DatabaseSeeder(
             val fileContent = inputStream.bufferedReader().use { it.readText() }
 
             val mockCurrencyPairList = Json.decodeFromString<List<CurrencyPairEntity>>(fileContent)
-            currencyRepository.saveAll(mockCurrencyPairList)
+            currencyRepository!!.saveAll(mockCurrencyPairList)
             logger.info("CurrencyPairs repository seeded")
         } catch (e: Exception) {
             logger.warn(e.message)
@@ -54,7 +55,7 @@ class H2DatabaseSeeder(
             val totalCurrencyPairsStrings = mockOrderBook.asks.map { it.currencyPair }
                 .plus(mockOrderBook.bids.map { it.currencyPair })
 
-            val currencyPairsEntity = currencyRepository.findAllBySymbolIn(totalCurrencyPairsStrings)
+            val currencyPairsEntity = currencyRepository!!.findAllBySymbolIn(totalCurrencyPairsStrings)
 
             val orderbooks = currencyPairsEntity.map { currencyPair ->
 
@@ -67,7 +68,7 @@ class H2DatabaseSeeder(
                     sequenceNumber = OrderBookSequencer.next()
                 )
             }
-            orderBookRepository.saveAll(orderbooks)
+            orderBookRepository!!.saveAll(orderbooks)
             logger.info("Orderbook repository seeded")
         } catch (e: Exception) {
             logger.warn(e.message)
@@ -82,7 +83,7 @@ class H2DatabaseSeeder(
 
             val mockTradeHistory = Json.decodeFromString<List<TradeHistoryEntity>>(fileContent)
 
-            tradeHistoryRepository.saveAll(mockTradeHistory)
+            tradeHistoryRepository!!.saveAll(mockTradeHistory)
             logger.info("Trade History repository seeded")
         } catch (e: Exception) {
             logger.warn(e.message)

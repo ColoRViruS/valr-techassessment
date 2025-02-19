@@ -2,9 +2,10 @@ package com.valrTechassessment.entity.orderbook.clientModels
 
 import com.valrTechassessment.service.models.BuySellSideEnum
 import com.valrTechassessment.service.models.orderBook.OrderDomainDto
-import jakarta.persistence.*
-import kotlinx.serialization.Serializable
-import java.time.OffsetDateTime
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 
 @Entity
 data class BidsOrdersEntity(

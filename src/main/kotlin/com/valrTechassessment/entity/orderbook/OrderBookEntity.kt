@@ -4,14 +4,7 @@ import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
 import com.valrTechassessment.entity.orderbook.clientModels.SellOrdersEntity
 import com.valrTechassessment.entity.tradeHistory.serializer.OffsetDateTimeSerializer
 import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.OneToMany
+import jakarta.persistence.*
 import kotlinx.serialization.Serializable
 import java.time.OffsetDateTime
 

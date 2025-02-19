@@ -1,21 +1,35 @@
-package com.valrTechassessment.component.tradeHistory
+package com.valrTechassessment.component
 
-import com.valrTechassessment.component.TradeHistoryComponent
-import com.valrTechassessment.entity.tradeHistory.TradeHistoryClient
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertDoesNotThrow
+import com.valrTechassessment.entity.H2DatabaseSeeder
+import com.valrTechassessment.entity.currency.CurrencyRepository
+import com.valrTechassessment.entity.orderbook.OrderBookRepository
+import com.valrTechassessment.entity.tradeHistory.TradeHistoryRepository
+import org.junit.jupiter.api.*
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import kotlin.test.assertTrue
 
+@DataJpaTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TradeHistoryComponentTest {
 
-    private lateinit var tradeHistoryClient: TradeHistoryClientInterface
+    private lateinit var h2DatabaseSeeder: H2DatabaseSeeder
+    private lateinit var tradeHistoryRepository: TradeHistoryRepository
     private lateinit var tradeHistoryComponent: TradeHistoryComponent
+
+    @BeforeAll
+    fun beforeAllSetup(
+        @Autowired tradeHistoryRepository: TradeHistoryRepository
+    ) {
+        this.tradeHistoryRepository = tradeHistoryRepository
+        h2DatabaseSeeder = H2DatabaseSeeder(
+            tradeHistoryRepository = tradeHistoryRepository,
+        )
+    }
 
     @BeforeEach
     fun setup() {
-        tradeHistoryClient = TradeHistoryClient()
-        tradeHistoryComponent = TradeHistoryComponent(tradeHistoryClient)
+        tradeHistoryComponent = TradeHistoryComponent(tradeHistoryRepository)
     }
 
     @Test

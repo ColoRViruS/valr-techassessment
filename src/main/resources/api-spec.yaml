@@ -118,15 +118,15 @@ paths:
             type: string
           required: true
           description: Currency Pair
-        - name: limit
+        - name: pageSize
           in: query
           description: "limit the records returned"
           required: false
           schema:
             type: integer
-        - name: skip
+        - name: pageNumber
           in: query
-          description: "Skips first x amount of records"
+          description: "Page number"
           required: false
           schema:
             type: integer

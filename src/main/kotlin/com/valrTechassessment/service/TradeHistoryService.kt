@@ -26,8 +26,8 @@ class TradeHistoryService(
 
         val tradeHistory = tradeHistoryComponent.getTradeHistory(
             currencyPair = currencyPair,
-            limit = limit ?: -1,
-            skip = skip ?: -1
+            limit = limit,
+            skip = skip
         )
 
         return tradeHistory.map { it.toResponseDto() }
