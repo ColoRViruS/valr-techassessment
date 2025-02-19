@@ -86,12 +86,14 @@ paths:
       responses:
         '202':
           description: Ok
+        '400':
+          description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/postLimitOrderResponse'
-        '400':
-          description: Bad Request
+                $ref: '#/components/schemas/clientFriendlyException'
+        '406':
+          description:  Not Acceptable
           content:
             application/json:
               schema:

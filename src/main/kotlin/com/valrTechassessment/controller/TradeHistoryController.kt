@@ -13,14 +13,14 @@ class TradeHistoryController(
 
     override fun getTradeHistory(
         currencyPair: String,
-        limit: Int?,
-        skip: Int?
+        pageSize: Int?,
+        pageNumber: Int?
     ): ResponseEntity<List<TradeHistoryDetails>> {
         return ResponseEntity.ok(
             tradeHistoryService.getTradeHistory(
                 currencyPair = currencyPair,
-                limit = limit,
-                skip = skip
+                limit = pageSize,
+                skip = pageNumber
             )
         )
     }
