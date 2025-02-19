@@ -1,6 +1,5 @@
 package com.valrTechassessment.entity.tradeHistory
 
-import com.valrTechassessment.entity.tradeHistory.clientModels.TradeHistoryClientDto
 import com.valrTechassessment.component.tradeHistory.TradeHistoryClientInterface
 import com.valrTechassessment.service.models.tradeHistory.TradeHistoryDomainDto
 import kotlinx.serialization.json.Json
@@ -11,12 +10,9 @@ import org.springframework.stereotype.Repository
 @Repository
 class TradeHistoryClient : TradeHistoryClientInterface {
 
-    private val currencyToTradeHistoryMap = mutableMapOf<String, MutableList<TradeHistoryClientDto>>()
+    private val currencyToTradeHistoryMap = mutableMapOf<String, MutableList<TradeHistoryEntity>>()
     private val logger = LoggerFactory.getLogger(this::class.simpleName)
 
-    init {
-        seedMockTradeHistoryMap()
-    }
 
     override fun getTradeHistory(
         currencyPair: String,
@@ -44,7 +40,7 @@ class TradeHistoryClient : TradeHistoryClientInterface {
             val inputStream = ClassPathResource("TradeHistorySample.json").inputStream
             val fileContent = inputStream.bufferedReader().use { it.readText() }
 
-            val mockTradeHistory = Json.decodeFromString<List<TradeHistoryClientDto>>(fileContent)
+            val mockTradeHistory = Json.decodeFromString<List<TradeHistoryEntity>>(fileContent)
             mockTradeHistory.forEach { tradeHistory ->
                 val tradeHistoryList = currencyToTradeHistoryMap.getOrPut(key = tradeHistory.currencyPair) {
                     mutableListOf()

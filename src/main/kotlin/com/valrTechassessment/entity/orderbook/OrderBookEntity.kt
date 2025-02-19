@@ -1,5 +1,7 @@
-package com.valrTechassessment.entity.orderbook.clientModels
+package com.valrTechassessment.entity.orderbook
 
+import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
+import com.valrTechassessment.entity.orderbook.clientModels.SellOrdersEntity
 import com.valrTechassessment.entity.tradeHistory.serializer.OffsetDateTimeSerializer
 import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
 import jakarta.persistence.CascadeType

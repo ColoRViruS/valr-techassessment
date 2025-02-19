@@ -1,13 +1,14 @@
 package com.valrTechassessment.component
 
-import com.valrTechassessment.component.tradeHistory.TradeHistoryClientInterface
+import com.valrTechassessment.entity.tradeHistory.TradeHistoryRepository
 import com.valrTechassessment.service.models.tradeHistory.TradeHistoryDomainDto
 import org.slf4j.LoggerFactory
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Component
 
 @Component
 class TradeHistoryComponent(
-    private val tradeHistoryClientInterface: TradeHistoryClientInterface
+    private val tradeHistoryRepository: TradeHistoryRepository
 ) {
     private val logger = LoggerFactory.getLogger(this::class.simpleName)
 
@@ -19,12 +20,20 @@ class TradeHistoryComponent(
 
         logger.info("Getting Trade History for currency pair: $currencyPair")
 
-        val tradeHistory = tradeHistoryClientInterface.getTradeHistory(
-            currencyPair = currencyPair,
-            limit = limit,
-            skip = skip
-        )
 
-        return tradeHistory
+        val tradeHistory = if (limit == -1) {
+            tradeHistoryRepository.findByCurrencyPair(currencyPair = currencyPair)
+        } else {
+            val pageable = PageRequest.of(
+                skip,
+                limit
+            )
+            tradeHistoryRepository.findByCurrencyPair(
+                currencyPair = currencyPair,
+                pageable = pageable
+            )
+        }
+
+        return tradeHistory.content.map { it.toDomain() }
     }
 }

@@ -4,8 +4,9 @@ import com.valrTechassessment.entity.currency.CurrencyPairEntity
 import com.valrTechassessment.entity.currency.CurrencyRepository
 import com.valrTechassessment.entity.orderbook.OrderBookRepository
 import com.valrTechassessment.entity.orderbook.clientModels.MockOrderBook
-import com.valrTechassessment.entity.orderbook.clientModels.OrderBookEntity
-import com.valrTechassessment.entity.tradeHistory.clientModels.TradeHistoryClientDto
+import com.valrTechassessment.entity.orderbook.OrderBookEntity
+import com.valrTechassessment.entity.tradeHistory.TradeHistoryEntity
+import com.valrTechassessment.entity.tradeHistory.TradeHistoryRepository
 import kotlinx.serialization.json.Json
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -16,7 +17,8 @@ import java.time.OffsetDateTime
 @Component
 class H2DatabaseSeeder(
     private val currencyRepository: CurrencyRepository,
-    private val orderBookRepository: OrderBookRepository
+    private val orderBookRepository: OrderBookRepository,
+    private val tradeHistoryRepository: TradeHistoryRepository,
 ) {
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.simpleName)
@@ -24,6 +26,7 @@ class H2DatabaseSeeder(
     init {
         seedMockCurrencyPairsCache()
         seedMockOrderbookMap()
+        seedMockTradeHistoryMap()
     }
 
     private fun seedMockCurrencyPairsCache() {
@@ -34,6 +37,7 @@ class H2DatabaseSeeder(
 
             val mockCurrencyPairList = Json.decodeFromString<List<CurrencyPairEntity>>(fileContent)
             currencyRepository.saveAll(mockCurrencyPairList)
+            logger.info("CurrencyPairs repository seeded")
         } catch (e: Exception) {
             logger.warn(e.message)
             throw e
@@ -63,13 +67,8 @@ class H2DatabaseSeeder(
                     sequenceNumber = OrderBookSequencer.next()
                 )
             }
-            println(orderbooks.size)
             orderBookRepository.saveAll(orderbooks)
-
-            val order = orderBookRepository.findAll()
-
-            println()
-
+            logger.info("Orderbook repository seeded")
         } catch (e: Exception) {
             logger.warn(e.message)
             throw e
@@ -81,13 +80,10 @@ class H2DatabaseSeeder(
             val inputStream = ClassPathResource("TradeHistorySample.json").inputStream
             val fileContent = inputStream.bufferedReader().use { it.readText() }
 
-            val mockTradeHistory = Json.decodeFromString<List<TradeHistoryClientDto>>(fileContent)
-//            mockTradeHistory.forEach { tradeHistory ->
-//                val tradeHistoryList = currencyToTradeHistoryMap.getOrPut(key = tradeHistory.currencyPair) {
-//                    mutableListOf()
-//                }
-//                tradeHistoryList.add(tradeHistory)
-//            }
+            val mockTradeHistory = Json.decodeFromString<List<TradeHistoryEntity>>(fileContent)
+
+            tradeHistoryRepository.saveAll(mockTradeHistory)
+            logger.info("Trade History repository seeded")
         } catch (e: Exception) {
             logger.warn(e.message)
             throw e
