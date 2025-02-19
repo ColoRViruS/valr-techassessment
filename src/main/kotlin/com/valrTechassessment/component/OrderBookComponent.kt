@@ -20,6 +20,7 @@ class OrderBookComponent(
     ): OrderBookDomainDto {
 
         logger.info("Getting Orderbook for currency pair: $currencyPair")
+        val some = orderBookRepository.findAll()
 
         return orderBookRepository.findByCurrencyPair(currencyPair).toDomain()
     }
@@ -61,7 +62,7 @@ class OrderBookComponent(
             }
 
             SellBuySide.SELL -> {
-                val bidsUnderPrice = orderBook.bidsMap.filter { orders -> orders.orderPrice <= limitOrder.price }
+                val bidsUnderPrice = orderBook.bidsList.filter { orders -> orders.orderPrice <= limitOrder.price }
                 gtcHandleList(
                     bidsUnderPrice,
                     limitOrder.quantity

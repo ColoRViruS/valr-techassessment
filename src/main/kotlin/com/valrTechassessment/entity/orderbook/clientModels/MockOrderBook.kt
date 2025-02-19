@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MockOrderBook(
-    val asks: List<OrdersClientDto>,
-    val bids: List<OrdersClientDto>
+    val asks: List<MockOrders>,
+    val bids: List<MockOrders>
 )

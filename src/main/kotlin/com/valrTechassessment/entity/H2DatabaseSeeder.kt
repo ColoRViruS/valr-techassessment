@@ -53,16 +53,22 @@ class H2DatabaseSeeder(
             val currencyPairsEntity = currencyRepository.findAllBySymbolIn(totalCurrencyPairsStrings)
 
             val orderbooks = currencyPairsEntity.map { currencyPair ->
+
                 OrderBookEntity(
+                    id = null,
                     currencyPair = currencyPair.symbol,
-                    bids = mockOrderBook.bids.filter { it.currencyPair == currencyPair.symbol },
-                    asks = mockOrderBook.asks.filter { it.currencyPair == currencyPair.symbol },
+                    bids = mockOrderBook.bids.filter { it.currencyPair == currencyPair.symbol }.map { it.toBidsOrdersEntity() },
+                    asks = mockOrderBook.asks.filter { it.currencyPair == currencyPair.symbol }.map { it.toSellOrdersEntity() },
                     lastChange = OffsetDateTime.now(),
                     sequenceNumber = OrderBookSequencer.next()
                 )
             }
             println(orderbooks.size)
             orderBookRepository.saveAll(orderbooks)
+
+            val order = orderBookRepository.findAll()
+
+            println()
 
         } catch (e: Exception) {
             logger.warn(e.message)
