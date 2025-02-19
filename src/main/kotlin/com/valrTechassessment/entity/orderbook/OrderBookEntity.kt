@@ -1,7 +1,7 @@
 package com.valrTechassessment.entity.orderbook
 
 import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
-import com.valrTechassessment.entity.orderbook.clientModels.SellOrdersEntity
+import com.valrTechassessment.entity.orderbook.clientModels.AsksOrdersEntity
 import com.valrTechassessment.entity.tradeHistory.serializer.OffsetDateTimeSerializer
 import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
 import jakarta.persistence.*
@@ -19,13 +19,13 @@ data class OrderBookEntity(
         fetch = FetchType.LAZY
     )
     @JoinColumn(name = "order_book_id")
-    val asks: List<SellOrdersEntity>,
+    val asks: MutableList<AsksOrdersEntity>,
     @OneToMany(
         cascade = [CascadeType.ALL],
         fetch = FetchType.LAZY
     )
     @JoinColumn(name = "order_book_id")
-    val bids: List<BidsOrdersEntity>,
+    val bids: MutableList<BidsOrdersEntity>,
     @Serializable(with = OffsetDateTimeSerializer::class)
     val lastChange: OffsetDateTime,
     val sequenceNumber: Long
@@ -41,8 +41,8 @@ data class OrderBookEntity(
     constructor() : this(
         id = null,
         currencyPair = "",
-        asks = listOf(),
-        bids = listOf(),
+        asks = mutableListOf(),
+        bids = mutableListOf(),
         lastChange = OffsetDateTime.now(),
         sequenceNumber = 0
     )

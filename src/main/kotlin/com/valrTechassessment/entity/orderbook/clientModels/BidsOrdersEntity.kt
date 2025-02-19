@@ -37,4 +37,5 @@ data class BidsOrdersEntity(
             orderCountInt = orderCount,
         )
 
+
 }

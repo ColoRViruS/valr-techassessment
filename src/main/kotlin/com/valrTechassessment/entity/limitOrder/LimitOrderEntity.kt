@@ -1,6 +1,7 @@
 package com.valrTechassessment.entity.limitOrder
 
 import com.valrTechassessment.SellBuySide
+import com.valrTechassessment.service.models.BuySellSideEnum
 import com.valrTechassessment.service.models.limitOrder.TimeInForceDomainEnum
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -14,7 +15,7 @@ data class LimitOrderEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int? = null,
-    val side: SellBuySide,
+    val side: BuySellSideEnum,
     val quantity: Double,
     val price: String,
     val pair: String,
@@ -27,7 +28,7 @@ data class LimitOrderEntity(
 ) {
     constructor() : this(
         id = null,
-        side = SellBuySide.SELL,
+        side = BuySellSideEnum.SELL,
         quantity = 0.0,
         price = "",
         pair = "",

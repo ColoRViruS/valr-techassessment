@@ -62,8 +62,8 @@ class H2DatabaseSeeder(
                 OrderBookEntity(
                     id = null,
                     currencyPair = currencyPair.symbol,
-                    bids = mockOrderBook.bids.filter { it.currencyPair == currencyPair.symbol }.map { it.toBidsOrdersEntity() },
-                    asks = mockOrderBook.asks.filter { it.currencyPair == currencyPair.symbol }.map { it.toSellOrdersEntity() },
+                    bids = mockOrderBook.bids.filter { it.currencyPair == currencyPair.symbol }.map { it.toBidsOrdersEntity() }.toMutableList(),
+                    asks = mockOrderBook.asks.filter { it.currencyPair == currencyPair.symbol }.map { it.toSellOrdersEntity() }.toMutableList(),
                     lastChange = OffsetDateTime.now(),
                     sequenceNumber = OrderBookSequencer.next()
                 )

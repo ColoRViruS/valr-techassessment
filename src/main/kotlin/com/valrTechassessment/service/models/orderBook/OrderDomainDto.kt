@@ -1,6 +1,8 @@
 package com.valrTechassessment.service.models.orderBook
 
 import com.valrTechassessment.Orders
+import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
+import com.valrTechassessment.entity.orderbook.clientModels.AsksOrdersEntity
 import com.valrTechassessment.service.models.BuySellSideEnum
 
 data class OrderDomainDto(
@@ -21,4 +23,27 @@ data class OrderDomainDto(
             orderCount = orderCountInt
         }
 
+
+
+    fun toSellOrdersEntity() =
+        AsksOrdersEntity(
+            id = orderId,
+            side = orderSide,
+            quantity = orderQuantity,
+            price = orderPrice,
+            currencyPair = orderCurrencyPair,
+            orderCount = orderCountInt,
+
+            )
+
+    fun toBidsOrdersEntity() =
+        BidsOrdersEntity(
+            id = orderId,
+            side = orderSide,
+            quantity = orderQuantity,
+            price = orderPrice,
+            currencyPair = orderCurrencyPair,
+            orderCount = orderCountInt,
+
+            )
 }

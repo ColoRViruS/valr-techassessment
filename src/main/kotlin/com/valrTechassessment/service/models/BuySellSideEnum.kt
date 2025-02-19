@@ -12,9 +12,15 @@ enum class BuySellSideEnum(
         SellBuySide.SELL,
         "sell"
     ),
+
     @SerialName("buy")
     BUY(
         SellBuySide.BUY,
         "buy"
-    )
+    );
+
+    companion object {
+        fun fromRequest(requestSellBuySide: SellBuySide) = BuySellSideEnum.entries.find { it.side == requestSellBuySide }!!
+
+    }
 }

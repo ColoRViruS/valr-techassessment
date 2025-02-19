@@ -34,6 +34,6 @@ class TradeHistoryComponent(
             currencyPair = currencyPair,
             pageable = pageable
         )
-        return tradeHistory.content.sortedBy { it.tradedAt }.map { it.toDomain() }
+        return tradeHistory.content.sortedByDescending { it.tradedAt }.map { it.toDomain() }
     }
 }

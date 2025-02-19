@@ -34,7 +34,7 @@ data class MockOrders(
         )
 
     fun toSellOrdersEntity() =
-        SellOrdersEntity(
+        AsksOrdersEntity(
             id = null,
             side = side,
             quantity = quantity,
