@@ -1,5 +1,6 @@
 package com.valrTechassessment.component.tradeHistory
 
+import com.valrTechassessment.component.TradeHistoryComponent
 import com.valrTechassessment.entity.tradeHistory.TradeHistoryClient
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -1,5 +1,6 @@
-package com.valrTechassessment.component.tradeHistory
+package com.valrTechassessment.component
 
+import com.valrTechassessment.component.tradeHistory.TradeHistoryClientInterface
 import com.valrTechassessment.service.models.tradeHistory.TradeHistoryDomainDto
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component

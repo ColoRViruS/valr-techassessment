@@ -1,6 +1,7 @@
-package com.valrTechassessment.component.orderbook
+package com.valrTechassessment.component
 
 import com.valrTechassessment.SellBuySide
+import com.valrTechassessment.entity.orderbook.OrderBookRepository
 import com.valrTechassessment.service.models.limitOrder.CreateLimitOrderDomainDto
 import com.valrTechassessment.service.models.limitOrder.TimeInForceDomainEnum
 import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class OrderBookComponent(
-    private val orderBookClientInterface: OrderBookClientInterface
+    private val orderBookRepository: OrderBookRepository
 ) {
     private val logger = LoggerFactory.getLogger(this::class.simpleName)
 
@@ -20,12 +21,12 @@ class OrderBookComponent(
 
         logger.info("Getting Orderbook for currency pair: $currencyPair")
 
-        return orderBookClientInterface.getOrderbook(currencyPair)
+        return orderBookRepository.findByCurrencyPair(currencyPair).toDomain()
     }
 
     fun handleLimitOrder(createLimitOrderDomainDto: CreateLimitOrderDomainDto) {
 
-        val orderBook = orderBookClientInterface.getOrderbook(createLimitOrderDomainDto.pair)
+        val orderBook = orderBookRepository.findByCurrencyPair(createLimitOrderDomainDto.pair).toDomain()
 
         //Immediate or Cancel -> The order must be partially or fully filled immediately; any unfilled portion is canceled
         //Fill or Kill -> The order must be completely filled immediately, or it is canceled
@@ -83,7 +84,7 @@ class OrderBookComponent(
 //                orderBookClientInterface.removeOrder(uuid = uuid)
             } else {
                 val splitOrderBuying = order.copy(
-                    orderId =  null,
+                    orderId = null,
                     orderQuantity = limitOrderQuantityLeft
                 )
                 val splitOrderLeft = order.copy(
@@ -92,7 +93,7 @@ class OrderBookComponent(
                 )
                 buyingOrders.add(splitOrderBuying)
 //                orderBookClientInterface.removeUuidList()
-                orderBookClientInterface.addToOrderbook(order = splitOrderLeft)
+//                orderBookClientInterface.addToOrderbook(order = splitOrderLeft)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.valrTechassessment.component.currency
 
+import com.valrTechassessment.component.CurrencyComponent
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 import kotlin.test.assertFalse

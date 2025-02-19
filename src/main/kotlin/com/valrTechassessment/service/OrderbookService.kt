@@ -1,8 +1,8 @@
 package com.valrTechassessment.service
 
 import com.valrTechassessment.GetOrderBookResponse
-import com.valrTechassessment.component.currency.CurrencyComponent
-import com.valrTechassessment.component.orderbook.OrderBookComponent
+import com.valrTechassessment.component.CurrencyComponent
+import com.valrTechassessment.component.OrderBookComponent
 import com.valrTechassessment.exception.InvalidCurrencyPairException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

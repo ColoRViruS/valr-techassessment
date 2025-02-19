@@ -1,8 +1,8 @@
 package com.valrTechassessment.service
 
 import com.valrTechassessment.TradeHistoryDetails
-import com.valrTechassessment.component.currency.CurrencyComponent
-import com.valrTechassessment.component.tradeHistory.TradeHistoryComponent
+import com.valrTechassessment.component.CurrencyComponent
+import com.valrTechassessment.component.TradeHistoryComponent
 import com.valrTechassessment.exception.InvalidCurrencyPairException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

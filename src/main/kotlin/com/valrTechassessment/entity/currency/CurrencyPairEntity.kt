@@ -1,5 +1,6 @@
 package com.valrTechassessment.entity.currency
 
+import com.valrTechassessment.entity.orderbook.clientModels.OrderBookEntity
 import com.valrTechassessment.service.models.currency.CurrencyPairs
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

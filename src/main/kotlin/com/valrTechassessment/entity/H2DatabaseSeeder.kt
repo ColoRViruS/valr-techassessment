@@ -2,17 +2,21 @@ package com.valrTechassessment.entity
 
 import com.valrTechassessment.entity.currency.CurrencyPairEntity
 import com.valrTechassessment.entity.currency.CurrencyRepository
+import com.valrTechassessment.entity.orderbook.OrderBookRepository
 import com.valrTechassessment.entity.orderbook.clientModels.MockOrderBook
+import com.valrTechassessment.entity.orderbook.clientModels.OrderBookEntity
 import com.valrTechassessment.entity.tradeHistory.clientModels.TradeHistoryClientDto
 import kotlinx.serialization.json.Json
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component
+import java.time.OffsetDateTime
 
 @Component
 class H2DatabaseSeeder(
     private val currencyRepository: CurrencyRepository,
+    private val orderBookRepository: OrderBookRepository
 ) {
 
     private val logger: Logger = LoggerFactory.getLogger(this::class.simpleName)
@@ -30,7 +34,6 @@ class H2DatabaseSeeder(
 
             val mockCurrencyPairList = Json.decodeFromString<List<CurrencyPairEntity>>(fileContent)
             currencyRepository.saveAll(mockCurrencyPairList)
-            println()
         } catch (e: Exception) {
             logger.warn(e.message)
             throw e
@@ -44,19 +47,23 @@ class H2DatabaseSeeder(
 
             val mockOrderBook = Json.decodeFromString<MockOrderBook>(fileContent)
 
-//            mockOrderBook.asks.forEach { orders ->
-//                val clientOrderBook = currencyToOrderBookMap.getOrPut(key = orders.currencyPair) {
-//                    emptyOrderbook()
-//                }
-//                clientOrderBook.asks[UUID.fromString(orders.uuid)] = orders
-//            }
-//
-//            mockOrderBook.bids.forEach { orders ->
-//                val clientOrderBook = currencyToOrderBookMap.getOrPut(key = orders.currencyPair) {
-//                    emptyOrderbook()
-//                }
-//                clientOrderBook.bids[UUID.fromString(orders.uuid)] = orders
-//            }
+            val totalCurrencyPairsStrings = mockOrderBook.asks.map { it.currencyPair }
+                .plus(mockOrderBook.bids.map { it.currencyPair })
+
+            val currencyPairsEntity = currencyRepository.findAllBySymbolIn(totalCurrencyPairsStrings)
+
+            val orderbooks = currencyPairsEntity.map { currencyPair ->
+                OrderBookEntity(
+                    currencyPair = currencyPair.symbol,
+                    bids = mockOrderBook.bids.filter { it.currencyPair == currencyPair.symbol },
+                    asks = mockOrderBook.asks.filter { it.currencyPair == currencyPair.symbol },
+                    lastChange = OffsetDateTime.now(),
+                    sequenceNumber = OrderBookSequencer.next()
+                )
+            }
+            println(orderbooks.size)
+            orderBookRepository.saveAll(orderbooks)
+
         } catch (e: Exception) {
             logger.warn(e.message)
             throw e

@@ -1,9 +1,9 @@
 package com.valrTechassessment.service
 
 import com.valrTechassessment.PostLimitOrderResponse
-import com.valrTechassessment.component.currency.CurrencyComponent
-import com.valrTechassessment.component.orderbook.OrderBookComponent
-import com.valrTechassessment.component.tradeHistory.TradeHistoryComponent
+import com.valrTechassessment.component.CurrencyComponent
+import com.valrTechassessment.component.OrderBookComponent
+import com.valrTechassessment.component.TradeHistoryComponent
 import com.valrTechassessment.exception.InvalidCurrencyPairException
 import com.valrTechassessment.service.models.limitOrder.CreateLimitOrderDomainDto
 import org.slf4j.LoggerFactory

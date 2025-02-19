@@ -1,7 +1,6 @@
-package com.valrTechassessment.component.currency
+package com.valrTechassessment.component
 
 import com.valrTechassessment.entity.currency.CurrencyRepository
-import com.valrTechassessment.service.models.currency.CurrencyPairs
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 

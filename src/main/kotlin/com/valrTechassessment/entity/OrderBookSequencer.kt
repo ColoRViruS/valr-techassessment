@@ -1,6 +1,6 @@
-package com.valrTechassessment.entity.orderbook.clientModels
+package com.valrTechassessment.entity
 
-class Sequencer {
+object OrderBookSequencer {
     private var current = 1
 
     fun next(): Long {
