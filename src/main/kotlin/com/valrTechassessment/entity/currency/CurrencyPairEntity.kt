@@ -1,16 +1,18 @@
 package com.valrTechassessment.entity.currency
 
 import com.valrTechassessment.service.models.currency.CurrencyPairs
+import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CurrencyPairRepoDto(
+@Entity
+data class CurrencyPairEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int?,
+    val id: Int? = null,
     val symbol: String,
     val baseCurrency: String,
     val quoteCurrency: String,
@@ -26,8 +28,28 @@ data class CurrencyPairRepoDto(
     val currencyPairType: String,
     val initialMarginFraction: String? = null,
     val maintenanceMarginFraction: String? = null,
-    val autoCloseMarginFraction: String?= null
+    val autoCloseMarginFraction: String? = null
 ) {
+    constructor() : this(
+        id = null,
+        symbol = "",
+        baseCurrency = "",
+        quoteCurrency = "",
+        shortName = "",
+        active = false,
+        minBaseAmount = "",
+        maxBaseAmount = "",
+        minQuoteAmount = "",
+        maxQuoteAmount = "",
+        tickSize = "",
+        baseDecimalPlaces = "",
+        marginTradingAllowed = false,
+        currencyPairType = "",
+        initialMarginFraction = null,
+        maintenanceMarginFraction = null,
+        autoCloseMarginFraction = null
+    )
+
     fun toDomain(): CurrencyPairs {
         return CurrencyPairs(
             symbol = symbol,
@@ -37,4 +59,3 @@ data class CurrencyPairRepoDto(
         )
     }
 }
-

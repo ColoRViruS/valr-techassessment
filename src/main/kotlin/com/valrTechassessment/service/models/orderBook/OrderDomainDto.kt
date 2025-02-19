@@ -5,7 +5,7 @@ import com.valrTechassessment.service.models.BuySellSideEnum
 import java.util.UUID
 
 data class OrderDomainDto(
-    val orderUUID: UUID,
+    val orderId: Int?,
     val orderSide: BuySellSideEnum,
     val orderQuantity: Double,
     val orderPrice: String,

@@ -7,7 +7,6 @@ import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
 import com.valrTechassessment.service.models.orderBook.OrderDomainDto
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import java.util.UUID
 
 @Component
 class OrderBookComponent(
@@ -27,7 +26,6 @@ class OrderBookComponent(
     fun handleLimitOrder(createLimitOrderDomainDto: CreateLimitOrderDomainDto) {
 
         val orderBook = orderBookClientInterface.getOrderbook(createLimitOrderDomainDto.pair)
-
 
         //Immediate or Cancel -> The order must be partially or fully filled immediately; any unfilled portion is canceled
         //Fill or Kill -> The order must be completely filled immediately, or it is canceled
@@ -54,7 +52,7 @@ class OrderBookComponent(
 
         when (limitOrder.side) {
             SellBuySide.BUY -> {
-                val asksUnderPrice = orderBook.asksMap.filter { orders -> orders.value.orderPrice <= limitOrder.price }
+                val asksUnderPrice = orderBook.asksList.filter { orders -> orders.orderPrice <= limitOrder.price }
                 gtcHandleList(
                     asksUnderPrice,
                     limitOrder.quantity
@@ -62,7 +60,7 @@ class OrderBookComponent(
             }
 
             SellBuySide.SELL -> {
-                val bidsUnderPrice = orderBook.bidsMap.filter { orders -> orders.value.orderPrice <= limitOrder.price }
+                val bidsUnderPrice = orderBook.bidsMap.filter { orders -> orders.orderPrice <= limitOrder.price }
                 gtcHandleList(
                     bidsUnderPrice,
                     limitOrder.quantity
@@ -73,28 +71,27 @@ class OrderBookComponent(
     }
 
     fun gtcHandleList(
-        asksUnderPrice: Map<UUID, OrderDomainDto>,
+        asksUnderPrice: List<OrderDomainDto>,
         limitOrderQuantity: Double
     ) {
         var limitOrderQuantityLeft = limitOrderQuantity
         val buyingOrders = mutableListOf<OrderDomainDto>()
-
-        asksUnderPrice.forEach { (uuid, order) ->
+        asksUnderPrice.forEach { order ->
             if (order.orderQuantity <= limitOrderQuantityLeft) {
-                buyingOrders.add(uuid)
+                buyingOrders.add(order)
                 limitOrderQuantityLeft.minus(order.orderQuantity)
-                orderBookClientInterface.removeOrder(uuid = uuid)
+//                orderBookClientInterface.removeOrder(uuid = uuid)
             } else {
                 val splitOrderBuying = order.copy(
-                    orderUUID = UUID.randomUUID(),
+                    orderId =  null,
                     orderQuantity = limitOrderQuantityLeft
                 )
                 val splitOrderLeft = order.copy(
-                    orderUUID = UUID.randomUUID(),
+                    orderId = null,
                     orderQuantity = order.orderQuantity.minus(limitOrderQuantityLeft)
                 )
                 buyingOrders.add(splitOrderBuying)
-                orderBookClientInterface.removeUuidList(uuid = uuid)
+//                orderBookClientInterface.removeUuidList()
                 orderBookClientInterface.addToOrderbook(order = splitOrderLeft)
             }
         }
