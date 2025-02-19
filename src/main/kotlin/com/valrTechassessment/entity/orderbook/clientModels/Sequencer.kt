@@ -1,4 +1,4 @@
-package com.valrTechassessment.clients.orderbook.clientModels
+package com.valrTechassessment.entity.orderbook.clientModels
 
 class Sequencer {
     private var current = 1

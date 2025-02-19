@@ -1,15 +1,17 @@
-package com.valrTechassessment.clients.orderbook
+package com.valrTechassessment.entity.orderbook
 
-import com.valrTechassessment.clients.orderbook.clientModels.MockOrderBook
-import com.valrTechassessment.clients.orderbook.clientModels.OrderBookClientDto
-import com.valrTechassessment.clients.orderbook.clientModels.Sequencer
+import com.valrTechassessment.entity.orderbook.clientModels.MockOrderBook
+import com.valrTechassessment.entity.orderbook.clientModels.OrderBookClientDto
+import com.valrTechassessment.entity.orderbook.clientModels.Sequencer
 import com.valrTechassessment.component.orderbook.OrderBookClientInterface
-import com.valrTechassessment.models.orderBook.OrderBookDomainDto
+import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
+import com.valrTechassessment.service.models.orderBook.OrderDomainDto
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Repository
 import java.time.OffsetDateTime
+import java.util.UUID
 
 @Repository
 class OrderBookClient : OrderBookClientInterface {
@@ -30,13 +32,26 @@ class OrderBookClient : OrderBookClientInterface {
         val currencyPairOrderBook = currencyToOrderBookMap.getOrPut(key = currencyPair) {
             emptyOrderbook()
         }
-        return currencyPairOrderBook.toDomain()
+
+        val sortedMap = currencyPairOrderBook.copy(
+            asks = currencyPairOrderBook.asks.entries.sortedBy { it.value.price }.associate { it.toPair() }.toMutableMap(),
+            bids = currencyPairOrderBook.bids.entries.sortedByDescending { it.value.price }.associate { it.toPair() }.toMutableMap(),
+        )
+        return sortedMap.toDomain()
+    }
+
+    override fun addToOrderbook(order: OrderDomainDto) {
+        TODO("Not yet implemented")
+    }
+
+    override fun removeOrder(uuid: UUID) {
+        TODO("Not yet implemented")
     }
 
     private fun emptyOrderbook() =
         OrderBookClientDto(
-            asks = mutableListOf(),
-            bids = mutableListOf(),
+            asks = mutableMapOf(),
+            bids = mutableMapOf(),
             lastChange = OffsetDateTime.now(),
             sequenceNumber = sequencer.next()
         )
@@ -52,14 +67,14 @@ class OrderBookClient : OrderBookClientInterface {
                 val clientOrderBook = currencyToOrderBookMap.getOrPut(key = orders.currencyPair) {
                     emptyOrderbook()
                 }
-                clientOrderBook.asks.add(orders)
+                clientOrderBook.asks[UUID.fromString(orders.uuid)] = orders
             }
 
             mockOrderBook.bids.forEach { orders ->
                 val clientOrderBook = currencyToOrderBookMap.getOrPut(key = orders.currencyPair) {
                     emptyOrderbook()
                 }
-                clientOrderBook.bids.add(orders)
+                clientOrderBook.bids[UUID.fromString(orders.uuid)] = orders
             }
         } catch (e: Exception) {
             logger.warn(e.message)

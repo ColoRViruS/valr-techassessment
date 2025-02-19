@@ -1,4 +1,4 @@
-package com.valrTechassessment.models.currency
+package com.valrTechassessment.service.models.currency
 
 data class CurrencyPairs(
     val symbol: String,

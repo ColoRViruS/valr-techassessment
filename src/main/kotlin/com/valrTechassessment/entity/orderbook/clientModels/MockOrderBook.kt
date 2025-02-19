@@ -1,4 +1,4 @@
-package com.valrTechassessment.clients.orderbook.clientModels
+package com.valrTechassessment.entity.orderbook.clientModels
 
 import kotlinx.serialization.Serializable
 

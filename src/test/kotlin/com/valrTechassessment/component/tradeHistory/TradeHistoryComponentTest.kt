@@ -1,6 +1,6 @@
 package com.valrTechassessment.component.tradeHistory
 
-import com.valrTechassessment.clients.tradeHistory.TradeHistoryClient
+import com.valrTechassessment.entity.tradeHistory.TradeHistoryClient
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow

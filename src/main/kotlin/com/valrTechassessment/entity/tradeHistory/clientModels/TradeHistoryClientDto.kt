@@ -1,8 +1,8 @@
-package com.valrTechassessment.clients.tradeHistory.clientModels
+package com.valrTechassessment.entity.tradeHistory.clientModels
 
-import com.valrTechassessment.clients.tradeHistory.serializer.OffsetDateTimeSerializer
-import com.valrTechassessment.models.BuySellSideEnum
-import com.valrTechassessment.models.tradeHistory.TradeHistoryDomainDto
+import com.valrTechassessment.entity.tradeHistory.serializer.OffsetDateTimeSerializer
+import com.valrTechassessment.service.models.BuySellSideEnum
+import com.valrTechassessment.service.models.tradeHistory.TradeHistoryDomainDto
 import kotlinx.serialization.Serializable
 import java.time.OffsetDateTime
 

@@ -1,8 +1,16 @@
-package com.valrTechassessment.clients.currency.clientModels
+package com.valrTechassessment.entity.currency
 
-import com.valrTechassessment.models.currency.CurrencyPairs
+import com.valrTechassessment.service.models.currency.CurrencyPairs
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import kotlinx.serialization.Serializable
 
-data class CurrencyPairClientDto(
+@Serializable
+data class CurrencyPairRepoDto(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Int?,
     val symbol: String,
     val baseCurrency: String,
     val quoteCurrency: String,
@@ -16,9 +24,9 @@ data class CurrencyPairClientDto(
     val baseDecimalPlaces: String,
     val marginTradingAllowed: Boolean,
     val currencyPairType: String,
-    val initialMarginFraction: String?,
-    val maintenanceMarginFraction: String?,
-    val autoCloseMarginFraction: String?
+    val initialMarginFraction: String? = null,
+    val maintenanceMarginFraction: String? = null,
+    val autoCloseMarginFraction: String?= null
 ) {
     fun toDomain(): CurrencyPairs {
         return CurrencyPairs(

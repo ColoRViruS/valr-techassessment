@@ -62,6 +62,48 @@ paths:
               schema:
                 $ref: '#/components/schemas/clientFriendlyException'
 
+  /limitorder:
+    post:
+      tags:
+        - orderslimit
+      summary: Create a new limit order.
+      description: Create a new limit order.
+      operationId: postLimitOrder
+      parameters:
+        - name: X-VALR-API-KEY
+          in: header
+          description: your Api Key
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: "limit order rquest body"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/postLimitOrderRequest'
+      responses:
+        '202':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postLimitOrderResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/clientFriendlyException'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/clientFriendlyException'
+
+
   /tradehistory/{currencyPair}:
     get:
       tags:
@@ -113,11 +155,11 @@ components:
     getOrderBookResponse:
       type: object
       properties:
-        AsksList:
+        Asks:
           type: array
           items:
             $ref: '#/components/schemas/Orders'
-        BidsList:
+        Bids:
           type: array
           items:
             $ref: '#/components/schemas/Orders'
@@ -130,10 +172,64 @@ components:
           format: int64
           example: 6916055818
 
+    postLimitOrderRequest:
+      type: object
+      required:
+        - side
+        - quantity
+        - price
+        - pair
+      properties:
+        side:
+          $ref: "#/components/schemas/SellBuySide"
+        quantity:
+          type: string
+          description: "The quantity of the asset to be traded"
+          example: "0.100000"
+        price:
+          type: string
+          description: "The price at which the order is placed"
+          example: "64250"
+        pair:
+          type: string
+          description: "The trading pair (e.g., BTCUSDC)"
+          example: "BTCUSDC"
+        postOnly:
+          type: boolean
+          description: "Whether the order should be a post-only order"
+          example: true
+        customerOrderId:
+          type: string
+          description: "The customer-provided order ID"
+          example: "1234"
+        timeInForce:
+          $ref: "#/components/schemas/TimeInForce"
+        allowMargin:
+          type: boolean
+          description: "Whether margin trading is allowed. Default value is false"
+          example: "false"
+        reduceOnly:
+          type: boolean
+          description: "Whether the order is a reduce-only order. Default value is false"
+          example: "false"
+        conditionalOrderData:
+          type: string
+          description: "Used on futures pairs to manage exposure through adding a Take Profit and/or Stop Loss (TPSL) to the order"
+          example: "false"
+
+    postLimitOrderResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "limit order UUID"
+          example: "558f5e0a-ffd1-46dd-8fae-763d93fa2f25"
+
+
     getTradeHistoryResponse:
-        type: array
-        items:
-          $ref: '#/components/schemas/TradeHistoryDetails'
+      type: array
+      items:
+        $ref: '#/components/schemas/TradeHistoryDetails'
 
     Orders:
       type: object
@@ -196,9 +292,18 @@ components:
       type: string
       description: "buyer or seller side"
       enum:
-        - "buy"
-        - "sell"
-      example: "sell"
+        - "BUY"
+        - "SELL"
+      example: "SELL"
+
+    TimeInForce:
+      type: string
+      description: "The time in force for the order"
+      enum:
+        - "GTC"  # Good-Til-Canceled
+        - "IOC"  # Immediate-Or-Cancel
+        - "FOK"  # Fill-Or-Kill
+      example: "GTC"
 
     clientFriendlyException:
       type: object

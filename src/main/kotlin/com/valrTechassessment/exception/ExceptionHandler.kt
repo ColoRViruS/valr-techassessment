@@ -4,6 +4,7 @@ import com.valrTechassessment.ClientFriendlyException
 import com.valrTechassessment.ValrTechassessmentApplication
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.MissingRequestHeaderException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
@@ -67,5 +68,16 @@ class ExceptionHandler {
             throwable
         )
         return ClientFriendlyException().reason(throwable.message)
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingRequestHeaderException::class)
+    @ResponseBody
+    fun missingRequestHeaderException(throwable: MissingRequestHeaderException): ClientFriendlyException {
+        logger.error(
+            "Missing headers",
+            throwable
+        )
+        return ClientFriendlyException().reason("Missing headers")
     }
 }

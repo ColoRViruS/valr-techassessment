@@ -14,6 +14,5 @@ class OrderbookController(
     override fun getOrderbook(currencyPair: String): ResponseEntity<GetOrderBookResponse> {
         val orderbook = orderbookService.getOrderbook(currencyPair = currencyPair)
         return ResponseEntity.ok(orderbook)
-
     }
 }

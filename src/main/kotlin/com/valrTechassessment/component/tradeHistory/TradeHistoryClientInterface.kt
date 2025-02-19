@@ -1,6 +1,6 @@
 package com.valrTechassessment.component.tradeHistory
 
-import com.valrTechassessment.models.tradeHistory.TradeHistoryDomainDto
+import com.valrTechassessment.service.models.tradeHistory.TradeHistoryDomainDto
 
 interface TradeHistoryClientInterface {
 

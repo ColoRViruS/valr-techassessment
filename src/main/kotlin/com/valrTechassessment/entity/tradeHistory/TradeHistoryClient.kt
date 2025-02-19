@@ -1,8 +1,8 @@
-package com.valrTechassessment.clients.tradeHistory
+package com.valrTechassessment.entity.tradeHistory
 
-import com.valrTechassessment.clients.tradeHistory.clientModels.TradeHistoryClientDto
+import com.valrTechassessment.entity.tradeHistory.clientModels.TradeHistoryClientDto
 import com.valrTechassessment.component.tradeHistory.TradeHistoryClientInterface
-import com.valrTechassessment.models.tradeHistory.TradeHistoryDomainDto
+import com.valrTechassessment.service.models.tradeHistory.TradeHistoryDomainDto
 import kotlinx.serialization.json.Json
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.ClassPathResource

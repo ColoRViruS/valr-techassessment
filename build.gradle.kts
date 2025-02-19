@@ -27,6 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.2.0")
     implementation("commons-io:commons-io:2.18.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.h2database:h2")
 
     //Swagger
     implementation("javax.annotation:javax.annotation-api:1.3.2")

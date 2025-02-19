@@ -1,4 +1,4 @@
-package com.valrTechassessment.models
+package com.valrTechassessment.service.models
 
 import com.valrTechassessment.SellBuySide
 import kotlinx.serialization.SerialName

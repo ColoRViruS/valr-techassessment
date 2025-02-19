@@ -1,7 +1,7 @@
-package com.valrTechassessment.models.tradeHistory
+package com.valrTechassessment.service.models.tradeHistory
 
 import com.valrTechassessment.TradeHistoryDetails
-import com.valrTechassessment.models.BuySellSideEnum
+import com.valrTechassessment.service.models.BuySellSideEnum
 import java.time.OffsetDateTime
 
 data class TradeHistoryDomainDto(

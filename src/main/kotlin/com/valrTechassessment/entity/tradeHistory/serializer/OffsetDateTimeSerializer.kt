@@ -1,4 +1,4 @@
-package com.valrTechassessment.clients.tradeHistory.serializer
+package com.valrTechassessment.entity.tradeHistory.serializer
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

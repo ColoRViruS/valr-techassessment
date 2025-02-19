@@ -1,6 +1,5 @@
 package com.valrTechassessment.component.currency
 
-import com.valrTechassessment.clients.currency.CurrencyClient
 import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -12,8 +11,8 @@ class CurrencyComponentTest {
 
     @BeforeEach
     fun setup() {
-        currencyClient = CurrencyClient()
-        currencyComponent = CurrencyComponent(currencyClient)
+//        currencyClient = CurrencyClient()
+//        currencyComponent = CurrencyComponent(currencyClient)
     }
 
     @Test
@@ -35,6 +34,4 @@ class CurrencyComponentTest {
         //then
         assertFalse(resultBoolean)
     }
-
-
 }

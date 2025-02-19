@@ -1,6 +1,6 @@
 package com.valrTechassessment.component.orderbook
 
-import com.valrTechassessment.clients.orderbook.OrderBookClient
+import com.valrTechassessment.entity.orderbook.OrderBookClient
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
