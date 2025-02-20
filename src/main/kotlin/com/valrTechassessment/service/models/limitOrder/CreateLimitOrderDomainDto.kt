@@ -1,8 +1,6 @@
 package com.valrTechassessment.service.models.limitOrder
 
 import com.valrTechassessment.PostLimitOrderRequest
-import com.valrTechassessment.SellBuySide
-import com.valrTechassessment.entity.limitOrder.LimitOrderEntity
 import com.valrTechassessment.service.models.BuySellSideEnum
 
 data class CreateLimitOrderDomainDto(
@@ -35,17 +33,3 @@ fun PostLimitOrderRequest.toDomain(): CreateLimitOrderDomainDto {
         conditionalOrderData = conditionalOrderData
     )
 }
-
-fun CreateLimitOrderDomainDto.toEntity() =
-    LimitOrderEntity(
-        side = side,
-        quantity = quantity,
-        price = price,
-        pair = pair,
-        postOnly = postOnly,
-        customerOrderId = customerOrderId,
-        timeInForce = timeInForce,
-        allowMargin = allowMargin,
-        reduceOnly = reduceOnly,
-        conditionalOrderData = conditionalOrderData
-    )

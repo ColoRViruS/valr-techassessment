@@ -1,7 +1,7 @@
 package com.valrTechassessment.entity.orderbook
 
-import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
 import com.valrTechassessment.entity.orderbook.clientModels.AsksOrdersEntity
+import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
 import com.valrTechassessment.entity.tradeHistory.serializer.OffsetDateTimeSerializer
 import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
 import jakarta.persistence.*

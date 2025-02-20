@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "price": "1792421",
+    "quantity": "0.00326263",
+    "currencyPair": "BTCZAR",
+    "tradedAt": "2025-02-17T18:11:23.048Z",
+    "takerSide": "sell",
+    "sequenceId": 1341109758534356995,
+    "id": "98579203-ed5a-11ef-94b8-8bb637837ae4",
+    "quoteVolume": "5848.00652723"
+  }
+]

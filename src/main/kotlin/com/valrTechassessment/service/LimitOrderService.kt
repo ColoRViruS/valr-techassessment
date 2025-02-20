@@ -1,12 +1,9 @@
 package com.valrTechassessment.service
 
-import com.valrTechassessment.PostLimitOrderResponse
 import com.valrTechassessment.component.CurrencyComponent
-import com.valrTechassessment.component.orderLimits.LimitOrderComponent
+import com.valrTechassessment.component.LimitOrderComponent
 import com.valrTechassessment.exception.InvalidCurrencyPairException
-import com.valrTechassessment.exception.LimitOrderNotAcceptedException
 import com.valrTechassessment.service.models.limitOrder.CreateLimitOrderDomainDto
-import com.valrTechassessment.service.models.limitOrder.TimeInForceDomainEnum
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 

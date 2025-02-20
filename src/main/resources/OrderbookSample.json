@@ -6,6 +6,13 @@
       "price": "1809990",
       "currencyPair": "BTCZAR",
       "orderCount": 1
+    },
+    {
+      "side": "sell",
+      "quantity": "0.3",
+      "price": "1809991",
+      "currencyPair": "BTCZAR",
+      "orderCount": 1
     }
   ],
   "bids": [
@@ -13,6 +20,13 @@
       "side": "buy",
       "quantity": "0.6",
       "price": "1810001",
+      "currencyPair": "BTCZAR",
+      "orderCount": 1
+    },
+    {
+      "side": "buy",
+      "quantity": "0.6",
+      "price": "1810002",
       "currencyPair": "BTCZAR",
       "orderCount": 1
     }

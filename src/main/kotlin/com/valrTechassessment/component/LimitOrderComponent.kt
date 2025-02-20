@@ -1,22 +1,19 @@
-package com.valrTechassessment.component.orderLimits
+package com.valrTechassessment.component
 
-import com.valrTechassessment.entity.orderbook.AsksOrdersRepository
-import com.valrTechassessment.entity.orderbook.BidsOrdersRepository
 import com.valrTechassessment.entity.orderbook.OrderBookRepository
-import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
 import com.valrTechassessment.entity.orderbook.clientModels.AsksOrdersEntity
+import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
 import com.valrTechassessment.entity.tradeHistory.TradeHistoryEntity
 import com.valrTechassessment.entity.tradeHistory.TradeHistoryRepository
 import com.valrTechassessment.entity.tradeHistory.TradeHistorySequencer
 import com.valrTechassessment.service.models.BuySellSideEnum
 import com.valrTechassessment.service.models.limitOrder.CreateLimitOrderDomainDto
 import com.valrTechassessment.service.models.limitOrder.TimeInForceDomainEnum
-import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
 import com.valrTechassessment.service.models.orderBook.OrderDomainDto
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.time.OffsetDateTime
-import java.util.UUID
+import java.util.*
 
 @Component
 class LimitOrderComponent(

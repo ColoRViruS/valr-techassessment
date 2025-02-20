@@ -1,8 +1,8 @@
 package com.valrTechassessment.service.models.orderBook
 
 import com.valrTechassessment.Orders
-import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
 import com.valrTechassessment.entity.orderbook.clientModels.AsksOrdersEntity
+import com.valrTechassessment.entity.orderbook.clientModels.BidsOrdersEntity
 import com.valrTechassessment.service.models.BuySellSideEnum
 
 data class OrderDomainDto(

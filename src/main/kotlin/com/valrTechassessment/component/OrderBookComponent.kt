@@ -17,11 +17,7 @@ class OrderBookComponent(
 
         logger.info("Getting Orderbook for currency pair: $currencyPair")
 
-
-        logger.info("asksOrdersRepository.to(): $orderBookRepository")
         val orderbook = orderBookRepository.findByCurrencyPair(currencyPair).toDomain()
-        logger.info("orderbook.asksList.to(): ${orderbook.asksList}")
-        logger.info("orderbook.asksList.to(): ${orderbook.bidsList}")
             return orderbook
     }
 }
