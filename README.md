@@ -14,10 +14,10 @@ This is an Implementation of an In-memory order book that can be retieved and ad
 
 There is a Swagger API spec in resources
 
-- GET /echoTest
-- GET /orderbook/{currencyPair}
-- POST /limitorder
-- GET /tradehistory/{currencyPair}
+- ```GET /echoTest```
+- ```GET /orderbook/{currencyPair}```
+- ```POST /limitorder```
+- ```GET /tradehistory/{currencyPair}```
 
 ## Gradle Commands
 
@@ -31,3 +31,7 @@ Any other Currency pair will return empty Orderbook.
 ## Postman collection
 
 There is a postman collection in postmanScripts for localhost:8080
+
+
+## Database seerder
+The database is seeded with starting test data out of the json files in resources 

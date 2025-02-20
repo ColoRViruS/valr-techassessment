@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "0ed40e46-a58c-4869-992f-8034c779d3c7",
+		"name": "VALR Technical Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30287260"
+	},
+	"item": [
+		{
+			"name": "Get Orderbook",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/orderbook/BTCZAR",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orderbook",
+						"BTCZAR"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get TradeHistory",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/tradehistory/BTCZAR",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tradehistory",
+						"BTCZAR"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Limit Order",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-VALR-API-KEY",
+						"value": " ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"side\": \"SELL\",\r\n    \"quantity\": \"0.9\",\r\n    \"price\": \"1810000\",\r\n    \"pair\": \"BTCZAR\",\r\n    \"timeInForce\" : \"IOC\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/limitorder",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"limitorder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EchoTest",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/echoTest",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"echoTest"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
