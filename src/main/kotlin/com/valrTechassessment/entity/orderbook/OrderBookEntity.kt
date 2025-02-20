@@ -19,12 +19,14 @@ data class OrderBookEntity(
         fetch = FetchType.LAZY
     )
     @JoinColumn(name = "order_book_id")
+    @OrderBy("price")
     val asks: MutableList<AsksOrdersEntity>,
     @OneToMany(
         cascade = [CascadeType.ALL],
         fetch = FetchType.LAZY
     )
     @JoinColumn(name = "order_book_id")
+    @OrderBy("price")
     val bids: MutableList<BidsOrdersEntity>,
     @Serializable(with = OffsetDateTimeSerializer::class)
     val lastChange: OffsetDateTime,

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 @Service
 class OrderbookService(
     private val currencyComponent: CurrencyComponent,
-    private val orderBookComponent: OrderBookComponent
+    private val orderBookComponent: OrderBookComponent,
 ) {
 
     private val logger = LoggerFactory.getLogger(this::class.simpleName)

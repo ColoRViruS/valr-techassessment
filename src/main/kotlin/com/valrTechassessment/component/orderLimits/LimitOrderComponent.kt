@@ -11,6 +11,7 @@ import com.valrTechassessment.entity.tradeHistory.TradeHistorySequencer
 import com.valrTechassessment.service.models.BuySellSideEnum
 import com.valrTechassessment.service.models.limitOrder.CreateLimitOrderDomainDto
 import com.valrTechassessment.service.models.limitOrder.TimeInForceDomainEnum
+import com.valrTechassessment.service.models.orderBook.OrderBookDomainDto
 import com.valrTechassessment.service.models.orderBook.OrderDomainDto
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -20,12 +21,10 @@ import java.util.UUID
 @Component
 class LimitOrderComponent(
     private val orderBookRepository: OrderBookRepository,
-    private val asksOrdersRepository: AsksOrdersRepository,
-    private val bidsOrdersRepository: BidsOrdersRepository,
     private val tradeHistoryRepository: TradeHistoryRepository
 
 ) {
-    private val logger = LoggerFactory.getLogger(this::class.simpleName) //todo logger
+    private val logger = LoggerFactory.getLogger(this::class.simpleName)
 
     fun handleLimitOrder(createLimitOrderDomainDto: CreateLimitOrderDomainDto): Boolean {
         val orderBook = orderBookRepository.findByCurrencyPair(createLimitOrderDomainDto.pair).toDomain()
@@ -141,7 +140,7 @@ class LimitOrderComponent(
             //If Available order is smaller or equel than limit order quantity
             if (order.orderQuantity <= limitOrderQuantityLeft) {
                 takingOrders.add(order)
-                limitOrderQuantityLeft.minus(order.orderQuantity)
+                limitOrderQuantityLeft = limitOrderQuantityLeft.minus(order.orderQuantity)
                 //If Available order is bigger than limit order quantity, need to split order
             } else {
                 val splitOrderTakingOrderId = splitOrder(
@@ -149,6 +148,7 @@ class LimitOrderComponent(
                     orderQuatity = limitOrderQuantityLeft
                 )
                 takingOrders.add(splitOrderTakingOrderId)
+                limitOrderQuantityLeft = limitOrderQuantityLeft.minus(splitOrderTakingOrderId.orderQuantity)
             }
             //If full quantity has been provisioned
             if (limitOrderQuantityLeft == 0.0) break
@@ -175,10 +175,14 @@ class LimitOrderComponent(
         takingOrders: MutableList<OrderDomainDto>
     ) {
         logger.info("removeOrdersFromRepository limitOrderDomainDto.side : ${limitOrderDomainDto.side}")
+        val orderbook = orderBookRepository.findByCurrencyPair(limitOrderDomainDto.pair)
+        val takingOrderIds = takingOrders.map { takingOrder -> takingOrder.orderId }
+        logger.info("removeOrdersFromRepository takingOrderIds : $takingOrderIds")
         when (limitOrderDomainDto.side) {
-            BuySellSideEnum.BUY -> asksOrdersRepository.deleteAllById(takingOrders.map { it.orderId })
-            BuySellSideEnum.SELL -> bidsOrdersRepository.deleteAllById(takingOrders.map { it.orderId })
+            BuySellSideEnum.BUY -> orderbook.asks.removeIf { takingOrderIds.contains(it.id) }
+            BuySellSideEnum.SELL -> orderbook.bids.removeIf { takingOrderIds.contains(it.id) }
         }
+        orderBookRepository.save(orderbook)
     }
 
     /**
@@ -197,20 +201,23 @@ class LimitOrderComponent(
             orderId = null,
             orderQuantity = order.orderQuantity.minus(orderQuatity)
         )
-
+        val orderbook = orderBookRepository.findByCurrencyPair(order.orderCurrencyPair)
         val takingOrder = when (order.orderSide) {
             BuySellSideEnum.SELL -> {
-                asksOrdersRepository.deleteById(order.orderId!!)
-                asksOrdersRepository.save(splitOrderLeftOver.toSellOrdersEntity())
-                asksOrdersRepository.save(splitOrderBuying.toSellOrdersEntity()).toDomain()
+                orderbook.asks.removeIf { it.id == order.orderId }
+                orderbook.asks.add(splitOrderLeftOver.toSellOrdersEntity())
+                orderbook.asks.add(splitOrderBuying.toSellOrdersEntity())
+                splitOrderBuying.toSellOrdersEntity().toDomain()
             }
 
             BuySellSideEnum.BUY -> {
-                bidsOrdersRepository.deleteById(order.orderId!!)
-                bidsOrdersRepository.save(splitOrderLeftOver.toBidsOrdersEntity())
-                bidsOrdersRepository.save(splitOrderBuying.toBidsOrdersEntity()).toDomain()
+                orderbook.bids.removeIf { it.id == order.orderId }
+                orderbook.bids.add(splitOrderLeftOver.toBidsOrdersEntity())
+                orderbook.bids.add(splitOrderBuying.toBidsOrdersEntity())
+                splitOrderBuying.toSellOrdersEntity().toDomain()
             }
         }
+        orderBookRepository.save(orderbook)
         return takingOrder
     }
 
