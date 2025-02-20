@@ -23,6 +23,8 @@ There is a Swagger API spec in resources
 
 ```./gradlew bootRun```
 
+runs springboot project and launch on localhost 8080 
+
 ## In-Memory Database
 
 Database is seeded with list of all valid currency pairs and an Orderbook for BTCZAR.
