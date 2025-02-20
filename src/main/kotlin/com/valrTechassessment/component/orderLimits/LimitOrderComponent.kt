@@ -143,12 +143,11 @@ class LimitOrderComponent(
                 limitOrderQuantityLeft = limitOrderQuantityLeft.minus(order.orderQuantity)
                 //If Available order is bigger than limit order quantity, need to split order
             } else {
-                val splitOrderTakingOrderId = splitOrder(
+                splitOrder(
                     order = order,
                     orderQuatity = limitOrderQuantityLeft
                 )
-                takingOrders.add(splitOrderTakingOrderId)
-                limitOrderQuantityLeft = limitOrderQuantityLeft.minus(splitOrderTakingOrderId.orderQuantity)
+                limitOrderQuantityLeft = 0.0
             }
             //If full quantity has been provisioned
             if (limitOrderQuantityLeft == 0.0) break
@@ -191,7 +190,7 @@ class LimitOrderComponent(
     fun splitOrder(
         order: OrderDomainDto,
         orderQuatity: Double
-    ): OrderDomainDto {
+    ) {
         logger.info("splitOrder order: $order")
         val splitOrderBuying = order.copy(
             orderId = null,
@@ -202,23 +201,21 @@ class LimitOrderComponent(
             orderQuantity = order.orderQuantity.minus(orderQuatity)
         )
         val orderbook = orderBookRepository.findByCurrencyPair(order.orderCurrencyPair)
-        val takingOrder = when (order.orderSide) {
+        when (order.orderSide) {
             BuySellSideEnum.SELL -> {
                 orderbook.asks.removeIf { it.id == order.orderId }
                 orderbook.asks.add(splitOrderLeftOver.toSellOrdersEntity())
-                orderbook.asks.add(splitOrderBuying.toSellOrdersEntity())
                 splitOrderBuying.toSellOrdersEntity().toDomain()
             }
 
             BuySellSideEnum.BUY -> {
                 orderbook.bids.removeIf { it.id == order.orderId }
                 orderbook.bids.add(splitOrderLeftOver.toBidsOrdersEntity())
-                orderbook.bids.add(splitOrderBuying.toBidsOrdersEntity())
+
                 splitOrderBuying.toSellOrdersEntity().toDomain()
             }
         }
         orderBookRepository.save(orderbook)
-        return takingOrder
     }
 
     /**

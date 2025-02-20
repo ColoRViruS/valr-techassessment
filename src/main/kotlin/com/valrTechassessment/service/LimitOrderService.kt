@@ -20,13 +20,13 @@ class LimitOrderService(
 
     fun createLimitOrder(
         createLimitOrderDomainDto: CreateLimitOrderDomainDto
-    ) {
+    ): Boolean {
         logger.info("createLimitOrder request: ${createLimitOrderDomainDto.pair}")
         val validCurrencyPair = currencyComponent.validateCurrencyPair(createLimitOrderDomainDto.pair.trim())
         if (!validCurrencyPair) throw InvalidCurrencyPairException()
 
         val accepted = limitOrderComponent.handleLimitOrder(createLimitOrderDomainDto)
-        if (!accepted) throw LimitOrderNotAcceptedException()
+        return accepted
     }
 
 

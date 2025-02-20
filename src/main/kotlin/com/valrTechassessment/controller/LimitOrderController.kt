@@ -17,9 +17,13 @@ class LimitOrderController(
         X_VALR_API_KEY: String,
         postLimitOrderRequest: PostLimitOrderRequest
     ): ResponseEntity<Void>? {
-        limitOrderService.createLimitOrder(
+        val accepted = limitOrderService.createLimitOrder(
             createLimitOrderDomainDto = postLimitOrderRequest.toDomain()
         )
-        return ResponseEntity(HttpStatus.ACCEPTED)
+        return ResponseEntity(
+            if (accepted) HttpStatus.ACCEPTED else {
+                HttpStatus.NOT_ACCEPTABLE
+            }
+        )
     }
 }
